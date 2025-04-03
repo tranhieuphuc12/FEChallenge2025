@@ -1,4 +1,4 @@
-function delay(ms: number, signal?: AbortSignal): Promise<void> {
+function delay(ms: number, signal: AbortSignal): Promise<void> {
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => resolve(), ms);
 
