@@ -10,27 +10,55 @@ const PORT = 8080;
     const allUsers = Array.from({ length: 100 }, (_, i) => ({
         id: String(i + 1),
         name: `User ${i + 1}`,
-        balance: Math.floor(Math.random() * 10000),
+        balance: Math.floor(i * 10000),
         email: `user${i + 1}@example.com`,
-        RegisteredAt: new Date(),
+        registeredAt: new Date(),
         active: Math.random() > 0.5,
     }));
 
 
 // Define a route to send all users
 app.get('/api/users', (req, res) => {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
-    const startIndex = (page - 1) * limit;
-    const endIndex = page * limit;
+    let {page , limit, sortBy, orderBy} = req.query;
 
-    const users = allUsers.slice(startIndex, endIndex);
-    const totalUsers = allUsers.length;
-    const totalPages = Math.ceil(totalUsers / limit);
+
+    const pageNum = parseInt(page) || 1;
+    const limitNum = parseInt(limit) || 5;
+
+    orderBy = orderBy == 'asc' ? 'asc' : 'desc';
+
+    let filteredUsers = [...allUsers];
+    // Sorting
+    if (sortBy) {
+        filteredUsers.sort((a, b) => {
+            if (sortBy === 'name') {
+                return orderBy === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
+            }else if (sortBy === 'balance') {
+                return orderBy === 'asc' ? a.balance - b.balance : b.balance - a.balance;
+            }
+            else if (sortBy === 'registeredAt') {
+                return orderBy === 'asc' ? new Date(a.registeredAt) - new Date(b.registeredAt) : new Date(b.registeredAt) - new Date(a.registeredAt);
+            }
+            return 0;
+        });
+    }
+
+
+
+
+    // Pagination
+    const startIndex = (pageNum - 1) * limitNum;
+    const endIndex = pageNum * limitNum;
+    
+
+
+    const users = filteredUsers.slice(startIndex, endIndex);
+    const totalUsers = filteredUsers.length;
+    const totalPages = Math.ceil(totalUsers / limitNum);
 
     const usersWithFormattedDates = users.map(user => ({ 
         ...user,
-        RegisteredAt: user.RegisteredAt.toISOString(),
+        registeredAt: user.registeredAt.toISOString(),
       }));
 
 

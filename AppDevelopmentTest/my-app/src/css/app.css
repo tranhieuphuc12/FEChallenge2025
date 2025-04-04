@@ -98,7 +98,19 @@ body .App {
   cursor: pointer;
   border-radius: 4px;
   font-size: 16px;
+  margin-bottom: 10px;
 }
+.controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.controls select {
+  padding: 5px;
+  font-size: 14px;
+}
+
 .theme-toggle-button:hover {
   background-color: #333;
   color: var(--button-text-color-hover);

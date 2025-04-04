@@ -17,13 +17,17 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const [sortBy, setSortBy] = useState('name');
+  const [orderBy, setOrderBy] = useState('asc');
+
+
   //Fetch users from API localhost:8080/api/users
   useEffect(() => {
     const fetchUsers = async () => {
       setIsLoading(true);
       setError(null);
       try {
-        const response = await fetch(`http://localhost:8080/api/users?page=${currentPage}&limit=${USERS_PER_PAGE}`);
+        const response = await fetch(`http://localhost:8080/api/users?page=${currentPage}&limit=${USERS_PER_PAGE}&sortBy=${sortBy}&orderBy=${orderBy}`);
         if (!response.ok) {
           setError('Network response was not ok');
           throw new Error('Network response was not ok');
@@ -40,7 +44,7 @@ function App() {
       setIsLoading(false);
     };
     fetchUsers();
-  }, [currentPage]);
+  }, [currentPage, sortBy, orderBy]);
 
   const toggleTheme = () => {
     setIsDarkMode((prev) => !prev);
@@ -86,6 +90,21 @@ function App() {
           {isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
         </button>
 
+        <div className="controls">
+        <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+          <option value="name">Sort by Name</option>
+          <option value="balance">Sort by Balance</option>
+          <option value="registeredAt">Sort by Registration Date</option>
+        </select>
+
+        <select value={orderBy} onChange={(e) => setOrderBy(e.target.value)}>
+          <option value="asc">Ascending</option>
+          <option value="desc">Descending</option>
+        </select>
+
+
+      </div>
+      
         <table>
           <thead>
             <tr>
@@ -126,10 +145,10 @@ function App() {
                   </button></td>
                 <td
                   data-label="Registration"
-                  data-hover={new Date(user.RegisteredAt).toLocaleString()}
+                  data-hover={new Date(user.registeredAt).toLocaleString()}
                   className="hover-td"
                 >
-                  {new Date(user.RegisteredAt).toLocaleDateString()}
+                  {new Date(user.registeredAt).toLocaleDateString()}
                 </td>
                 <td data-label="Status">
                   <button className='status-button'>Status</button>

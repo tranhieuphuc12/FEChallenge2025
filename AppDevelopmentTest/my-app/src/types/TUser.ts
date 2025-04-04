@@ -3,6 +3,6 @@ export interface TUser {
     name: string;
     balance: number;
     email: string;
-    RegisteredAt: Date;
+    registeredAt: Date;
     active: boolean;
 }
