@@ -151,3 +151,13 @@ Instead of compiling first, you can run TypeScript directly using `ts-node`:
 ```sh
 npx ts-node index.ts
 ```
+# Sources
+- W3School: https://www.w3schools.com/typescript/typescript_intro.php
+- ChatGPT: https://chatgpt.com
+- TypeScript: https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html
+- React: https://create-react-app.dev/docs/adding-typescript
+- MDM Web Docs: https://developer.mozilla.org/en-US/docs/Web/API/AbortController
+
+
+
+
