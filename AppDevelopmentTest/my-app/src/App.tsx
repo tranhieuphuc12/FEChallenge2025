@@ -65,7 +65,7 @@ function App() {
         : [...prev, userId]
     );
   };
-  
+
   if (isLoading) {
     return (
       <div className="loading">
@@ -91,20 +91,18 @@ function App() {
         </button>
 
         <div className="controls">
-        <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-          <option value="name">Sort by Name</option>
-          <option value="balance">Sort by Balance</option>
-          <option value="registeredAt">Sort by Registration Date</option>
-        </select>
+          <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+            <option value="name">Sort by Name</option>
+            <option value="balance">Sort by Balance</option>
+            <option value="registeredAt">Sort by Registration Date</option>
+          </select>
 
-        <select value={orderBy} onChange={(e) => setOrderBy(e.target.value)}>
-          <option value="asc">Ascending</option>
-          <option value="desc">Descending</option>
-        </select>
+          <select value={orderBy} onChange={(e) => setOrderBy(e.target.value)}>
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+          </select>
+        </div>
 
-
-      </div>
-      
         <table>
           <thead>
             <tr>
