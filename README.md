@@ -1,8 +1,8 @@
 # 🧠 Logic Test
----
+
 ## Detailed Explanation
 
----
+
 # How to Run a TypeScript File
 
 ## 1. Install TypeScript (If Not Installed)
@@ -155,7 +155,7 @@ setTimeout(() => {
 
 ## Detailed Explanation
 
----
+
 
 ## 📦 Tech Stack
 
@@ -416,11 +416,14 @@ catch (err) {
 
 ---
 
-## 🧪 Sample Screenshot
- - Light mode
+## 🧪 Sample Screenshots
 
+### Light mode
+<img width="1000" alt="Screenshot 2025-04-04 at 15 07 10" src="https://github.com/user-attachments/assets/0948cb61-0eca-4c5f-afab-fbaba45c000b" />
 
-## 
+### Dark mode
+<img width="1000" alt="Screenshot 2025-04-04 at 15 07 40" src="https://github.com/user-attachments/assets/3076b432-152a-4de9-919d-7e6320f64b14" />
+
 ---
 # Sources
 - W3School: https://www.w3schools.com/typescript/typescript_intro.php
@@ -428,6 +431,10 @@ catch (err) {
 - TypeScript: https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html
 - React: https://create-react-app.dev/docs/adding-typescript
 - MDM Web Docs: https://developer.mozilla.org/en-US/docs/Web/API/AbortController
+- Stack Overflow: https://stackoverflow.com/questions
+
+
+
 
 
 
