@@ -1,0 +1,274 @@
+
+.dark-mode {
+  --background-color: #181818;
+  --text-color: #e0e0e0;
+  --table-border-color: #555;
+  --button-background: #282828;
+  --button-text-color: #e0e0e0;
+  --button-text-color-hover: #ffffff;
+  --button-background-hover: #007bff;
+}
+
+.light-mode {
+  --background-color: #ffffff;
+  --text-color: #000000;
+  --table-border-color: #ddd;
+  --button-background: #f4f4f4;
+  --button-text-color: #000000;
+  --button-text-color-hover: #ffffff;
+  --button-background-hover: #007bff;
+}
+.loading {
+  text-align: center;
+  padding: 10px;
+  font-size: 16px;
+  color: var(--text-color);
+}
+.pagination {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+/* Error message container */
+.error {
+  background-color: #ffe6e6; /* Light red background */
+  color: #d8000c; /* Dark red text */
+  border: 1px solid #d8000c; /* Red border */
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  margin: 20px auto;
+  max-width: 500px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+
+.error button {
+  background-color: #d8000c; 
+  color: #ffffff; 
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.error button:hover {
+  background-color: #a30000; 
+}
+.pagination button {
+  padding: 5px 10px;
+  background-color: var(--button-background);
+  color: var(--button-text-color);
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.pagination button:disabled {
+  background-color: #333;
+  color: #666;
+  cursor: not-allowed;
+}
+
+body .App {
+  font-family: Arial, sans-serif;  
+  background-color: var(--background-color);
+  color: var(--text-color);
+  padding: 20px;
+}
+.container {  
+  max-width: 1200px;
+  margin: 0 auto;
+  background: var(--background-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+.theme-toggle-button{
+  background-color: var(--button-background);
+  color: var(--button-text-color);
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 16px;
+}
+.theme-toggle-button:hover {
+  background-color: #333;
+  color: var(--button-text-color-hover);
+  transition: all 0.3s ease;
+}
+.action-button {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 10px;
+
+}
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+.total-users {
+  display: inline-block;
+  margin: 20px 0;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: start;
+}
+
+.action-button:hover {
+  color: darkblue;
+}
+.status-button {  
+  color: var(--button-text-color);
+  background-color: var(--button-background);
+  border: 1px solid gray;
+  padding: 10px; 
+  text-align: center;   
+  cursor: pointer; 
+  border-radius: 4px; 
+  border-radius: 20px;
+}
+
+.hover-td {
+  position: relative;
+}
+
+.hover-td:hover::after {
+  content: attr(data-hover); 
+  position: absolute;
+  left: 0;
+  top: 5px;
+  background-color: #f9f9f9;
+  color: #333;
+  padding: 4px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 10;
+}
+.link-button {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  text-decoration: none;
+  cursor: pointer;
+  font-size: inherit;
+}
+.link-button:hover {
+  color: darkblue;
+  text-decoration: underline;  
+}
+.react-window{
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;  
+  font-size: 16px;
+  text-align: left;
+}
+
+th, td {
+  border: 1px solid var(--table-border-color);
+  padding: 8px;
+}
+
+th {
+  font-weight: bold;
+}
+
+tr:nth-child(even) {
+  background-color: var(--background-color-color);
+  
+}
+
+tr:hover {
+  background-color: gray;
+}
+
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #000;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  thead {
+    display: none; /* Hide the table header */
+  }
+  tr {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  td {
+    display: block;
+    width: 100%;
+    text-align: left;
+    border: none;
+    position: relative;
+    padding-left: 80%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid var(--table-border-color);
+  }
+
+  td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    width: calc(50% - 20px);
+    text-align: left;
+    font-weight: bold;
+    color: var(--text-color);
+    margin-right: 100px;
+    
+  }
+
+  td:last-child {
+    margin-bottom: 0;
+  }
+}

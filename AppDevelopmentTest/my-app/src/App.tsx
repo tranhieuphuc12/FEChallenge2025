@@ -1,24 +1,164 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import './css/app.css';
+import { TUser } from './types/TUser';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+import Pagination from './components/Pagination';
+
+const USERS_PER_PAGE = 10;
 
 function App() {
+  const [checkedUsers, setCheckedUsers] = useState<string[]>([]);
+  const [isDarkMode, setIsDarkMode] = useState((false));
+  const [users, setUsers] = useState<TUser[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  //Fetch users from API localhost:8080/api/users
+  useEffect(() => {
+    const fetchUsers = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const response = await fetch(`http://localhost:8080/api/users?page=${currentPage}&limit=${USERS_PER_PAGE}`);
+        if (!response.ok) {
+          setError('Network response was not ok');
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setUsers(data.users);
+        setTotalPages(data.totalPages);
+        setTotalUsers(data.totalUsers);
+        console.log('Users fetched:', data);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+        setError('Error fetching users');
+      }
+      setIsLoading(false);
+    };
+    fetchUsers();
+  }, [currentPage]);
+
+  const toggleTheme = () => {
+    setIsDarkMode((prev) => !prev);
+  }
+
+  const handleCheckAll = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.checked) {
+      setCheckedUsers(users.map((user) => user.id));
+    } else {
+      setCheckedUsers([]);
+    }
+  };
+
+  const handleCheckUser = (userId: string) => {
+    setCheckedUsers((prev) =>
+      prev.includes(userId)
+        ? prev.filter((id) => id !== userId)
+        : [...prev, userId]
+    );
+  };
+  
+  if (isLoading) {
+    return (
+      <div className="loading">
+        <div className="spinner"></div>
+      </div>
+    );
+  }
+  if (error) {
+    return (
+      <div className="error">
+        <p>{error}</p>
+        <button onClick={() => window.location.reload()}>Retry</button>
+      </div>
+    );
+  }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={`App ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
+      <div className="container">
+        <button className="theme-toggle-button" onClick={toggleTheme}>
+          {isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+        </button>
+
+        <table>
+          <thead>
+            <tr>
+              <th>
+                <input
+                  type="checkbox"
+                  id="check-all"
+                  onChange={handleCheckAll}
+                />
+                <label htmlFor="check-all">Name</label>
+              </th>
+              <th>Balance ($)</th>
+              <th>Email</th>
+              <th>Registration</th>
+              <th>STATUS</th>
+              <th>ACTION</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((user) => (
+              <tr key={user.id}>
+                <td data-label="Name">
+                  <input type="checkbox" id={`checkbox-${user.id}`}
+                    onChange={() => handleCheckUser(user.id)}
+                    checked={checkedUsers.includes(user.id)} />
+                  <label htmlFor={`checkbox-${user.id}`}>
+                    {user.name}
+                  </label>
+                </td>
+                <td data-label="Balance">
+                  {`$${user.balance.toLocaleString(undefined, {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 2
+                  })}`}
+                </td>
+                <td data-label="Email">
+                  <button className="link-button" onClick={() => alert(`Email: ${user.email}`)}>{user.email}
+                  </button></td>
+                <td
+                  data-label="Registration"
+                  data-hover={new Date(user.RegisteredAt).toLocaleString()}
+                  className="hover-td"
+                >
+                  {new Date(user.RegisteredAt).toLocaleDateString()}
+                </td>
+                <td data-label="Status">
+                  <button className='status-button'>Status</button>
+                </td>
+                <td data-label="Action">
+                  <button className='action-button'>
+                    <FontAwesomeIcon icon={faEdit}
+                    /></button>
+                  <button className='action-button'>
+                    <FontAwesomeIcon icon={faTrash}
+                    /></button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {/* Total Users */}
+        <div className="footer">
+          <div className="total-users">
+            <span>Total Users: {totalUsers}</span>
+          </div>
+          {/* Pagination */}
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={(page: number) => setCurrentPage(page)}
+          />
+        </div>
+      </div>
     </div>
   );
 }
